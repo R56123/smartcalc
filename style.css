@@ -11,10 +11,11 @@ body {
   color: #fff;
   display: flex;
   justify-content: center;
-  align-items: center;
-  align-items: flex-start; /* changed from center */
-  min-height: 100vh; /* changed from height */
-  padding: 40px 20px; /* give breathing space top & sides */}
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
 
 .main-wrapper {
   display: flex;
@@ -28,27 +29,57 @@ body {
 
 /* Container */
 .calculator-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
+/* Gradient glow effect */
+.calculator-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(72, 141, 236, 0.3), transparent 100%);
+  filter: blur(90px);
+  z-index: 0;
+  animation: pulseGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+
 /* Main Calculator Box */
 .calculator {
   position: relative;
+  z-index: 1;
   margin-top: 30px;
   background-color: #1e1e1e;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   width: 100%;
   max-width: 320px;
   transition: box-shadow 0.3s ease;
-    opacity: 0;
+  opacity: 0;
   transform: translateY(30px);
   animation: slideInCalc 0.4s ease-out forwards;
 }
+
 @keyframes slideInCalc {
   to {
     opacity: 1;
@@ -66,6 +97,15 @@ body {
   margin-bottom: 10px; /* Add this */
 
 }
+body.light-theme .calculator-container::before {
+  background: radial-gradient(circle at center, rgba(243, 254, 84, 0.4), transparent 70%);
+}
+
+body:not(.light-theme) .calculator-container::before {
+  background: radial-gradient(circle at center, rgba(63, 142, 252, 0.3), transparent 70%);
+}
+
+
 
 /* Display */
 .display {
@@ -118,6 +158,11 @@ button:active {
 button:hover {
   background-color: #666;
 }
+button:focus {
+  outline: 2px solid #6ca5f7;
+  outline-offset: 2px;
+}
+
 
 /* Special Styling for = button */
 .basic-buttons button:last-child {
@@ -293,4 +338,52 @@ body.light-theme .history-panel li {
 
 .display.error {
   color: #ff4d4d;
+}
+
+@media (max-width: 480px) {
+    body {
+  padding: 20px;
+}
+
+  .calculator {
+    padding: 15px;
+    border-radius: 16px;
+    max-width: 90vw;
+  }
+    .buttons {
+    margin-bottom: 15px;
+    }
+
+  .display {
+    font-size: 1.6rem;
+    padding: 15px;
+  }
+
+  .buttons button,
+  #modeSwitch,
+  #clearHistory {
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .sci-buttons,
+  .basic-buttons {
+    gap: 8px;
+  }
+
+  .theme-toggle {
+    font-size: 1rem;
+  }
+
+  .history-panel {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    max-height: 200px;
+  }
+    .calculator-container::before {
+    width: 400px;
+    height: 400px;
+    filter: blur(60px);
+  }
 }
