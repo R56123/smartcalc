@@ -113,3 +113,17 @@ modeSwitch.addEventListener('click', () => {
   }
 });
 
+// Clear History Button
+const clearHistoryBtn = document.getElementById('clearHistory');
+
+clearHistoryBtn.addEventListener('click', () => {
+  if (historyList.children.length === 0) {
+    alert('There is no history to clear.');
+    return;
+  }
+  const confirmClear = confirm('Are you sure you want to clear the history?');
+  if (confirmClear) {
+    historyList.innerHTML = '';
+  }
+});
+
