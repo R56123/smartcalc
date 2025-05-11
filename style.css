@@ -339,6 +339,29 @@ body.light-theme .history-panel li {
 .display.error {
   color: #ff4d4d;
 }
+.toast {
+  position: fixed;
+  top: 20px; /* 👈 Move to top */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #62a1fa;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+  max-width: 260px;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0); /* Optional pop-in effect */
+}
+
 
 @media (max-width: 480px) {
     body {
@@ -385,5 +408,10 @@ body.light-theme .history-panel li {
     width: 400px;
     height: 400px;
     filter: blur(60px);
+  }
+  .toast {
+    top: 20px; /* ✅ Keep it at the top */
+    bottom: auto; /* ✅ Cancel out the previous bottom value */
+    max-width: 90vw;
   }
 }

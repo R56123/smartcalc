@@ -100,28 +100,61 @@ updateDisplay(currentInput);
 
 // Listen for keyboard input
 document.addEventListener('keydown', (e) => {
-  const key = e.key;
+  const key = e.key.toLowerCase(); // Handle both upper/lower case
 
-  if (!isNaN(key) || ['+', '-', '*', '/', '.', '%'].includes(key)) {
+  if (!isNaN(key) || ['+', '-', '*', '/', '.', '%', '(', ')'].includes(key)) {
     handleButtonClick(key);
-  } else if (key === 'Enter') {
+  } else if (key === 'enter') {
     handleButtonClick('=');
-  } else if (key === 'Backspace') {
+  } else if (key === 'backspace') {
     handleButtonClick('←');
-  } else if (key === 'Escape') {
+  } else if (key === 'escape') {
     handleButtonClick('C');
   }
+
+  // Extended support for scientific functions
+  else if (key === '^') {
+    handleButtonClick('^');
+  } else if (key === 's') {
+    handleButtonClick('sin');
+  } else if (key === 'c') {
+    handleButtonClick('cos');
+  } else if (key === 't') {
+    handleButtonClick('tan');
+  } else if (key === 'l') {
+    handleButtonClick('ln');
+  } else if (key === 'g') {
+    handleButtonClick('log');
+  } else if (key === 'r') {
+    handleButtonClick('√');
+  } else if (key === 'p') {
+    handleButtonClick('π');
+  } else if (key === 'e') {
+    handleButtonClick('e');
+  }
+    // Shortcut: Alt + M to toggle mode
+  if (e.altKey && key === 'm') {
+    modeSwitch.click(); // Trigger the scientific mode toggle
+  }
+
+  // Shortcut: Alt + T to toggle theme
+  if (e.altKey && key === 't') {
+    themeToggle.click(); // Trigger the theme toggle
+  }
+
 });
+
 
 const themeToggle = document.querySelector('.theme-toggle');
-
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light-theme');
+  themeToggle.textContent = document.body.classList.contains('light-theme') ? '🌞' : '🌙';
 
-  // Change emoji to match theme
-  themeToggle.textContent =
-    document.body.classList.contains('light-theme') ? '🌞' : '🌙';
+  showToast(
+    document.body.classList.contains('light-theme') ? 'Light Theme Activated' : 'Dark Theme Activated'
+  );
 });
+
 
 const modeSwitch = document.getElementById('modeSwitch');
 const sciButtons = document.querySelector('.sci-buttons');
@@ -154,3 +187,12 @@ clearHistoryBtn.addEventListener('click', () => {
   }
 });
 
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2000); // Toast visible for 2 seconds
+}
