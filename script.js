@@ -1,5 +1,11 @@
 const display = document.getElementById('display');
 const historyList = document.getElementById('historyList');
+// Load history from localStorage on page load
+const savedHistory = JSON.parse(localStorage.getItem('calcHistory')) || [];
+
+savedHistory.forEach(entry => {
+  addToHistory(entry);
+});
 
 let currentInput = '';
 let resetDisplay = false;
@@ -69,6 +75,10 @@ function addToHistory(entry) {
   const li = document.createElement('li');
   li.textContent = entry;
   historyList.prepend(li); // newest at top
+
+// Save updated history
+  const currentHistory = Array.from(historyList.children).map(li => li.textContent);
+  localStorage.setItem('calcHistory', JSON.stringify(currentHistory));
 }
 
 
@@ -140,6 +150,7 @@ clearHistoryBtn.addEventListener('click', () => {
   const confirmClear = confirm('Are you sure you want to clear the history?');
   if (confirmClear) {
     historyList.innerHTML = '';
+    localStorage.removeItem('calcHistory');
   }
 });
 
