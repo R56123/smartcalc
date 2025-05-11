@@ -47,7 +47,7 @@ function handleButtonClick(value) {
     currentInput += value;
   }
   updateDisplay(currentInput);
-  
+
 }
 function addToHistory(entry) {
   const li = document.createElement('li');
@@ -97,20 +97,19 @@ themeToggle.addEventListener('click', () => {
     document.body.classList.contains('light-theme') ? '🌞' : '🌙';
 });
 
-// Toggle scientific mode
-const sciButtons = document.querySelectorAll('.sci');
 const modeSwitch = document.getElementById('modeSwitch');
-
-let isScientificMode = false;
+const sciButtons = document.querySelector('.sci-buttons');
+let isScientific = false;
 
 modeSwitch.addEventListener('click', () => {
-  isScientificMode = !isScientificMode;
+  isScientific = !isScientific;
 
-  sciButtons.forEach(btn => {
-    btn.style.display = isScientificMode ? 'inline-block' : 'none';
-  });
-
-  modeSwitch.textContent = isScientificMode
-    ? 'Switch to Basic Mode'
-    : 'Switch to Scientific Mode';
+  if (isScientific) {
+    modeSwitch.textContent = 'Switch to Basic Mode';
+    sciButtons.classList.add('visible');
+  } else {
+    modeSwitch.textContent = 'Switch to Scientific Mode';
+    sciButtons.classList.remove('visible');
+  }
 });
+

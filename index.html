@@ -6,20 +6,23 @@
   <title>SmartCalc</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="calculator-container">
-    <div class="calculator">
-        <div class="history-panel">
-        <h3>History</h3>
-        <ul id="historyList"></ul>
-        </div>
 
-      <div class="theme-toggle">🌙</div>
-      <div class="mode-toggle">
-        <button id="modeSwitch">Switch to Scientific Mode</button>
-        </div>
-      <div class="display" id="display">0</div>
-      <div class="buttons">
+<body>
+    <div class="main-wrapper">
+
+        <!--Calculator Section-->
+        <div class="calculator-container">
+            <div class="calculator">
+            <div class="theme-toggle">🌙</div>
+
+            <div class="mode-toggle">
+            <button id="modeSwitch">Switch to Scientific Mode</button>
+            </div>
+
+            <div class="display" id="display">0</div>
+
+            <div class="buttons">
+                <div class="sci-buttons">
         <!-- Scientific Row -->
         <button class="sci">sin</button>
         <button class="sci">cos</button>
@@ -35,8 +38,10 @@
         <button class="sci">π</button>
         <button class="sci">e</button>
         <button class="sci">^</button>
+        </div>
 
         <!-- Row 1 -->
+        <div class="basic-buttons">
         <button>C</button>
         <button>←</button>
         <button>%</button>
@@ -63,10 +68,18 @@
         <!-- Row 5 -->
         <button>0</button>
         <button>.</button>
-        <button>=</button>
+        <button class="equals">=</button>
+        </div>
       </div>
     </div>
   </div>
+
+    <div class="history-panel">
+        <h3>History</h3>
+        <ul id="historyList"></ul>
+          <button id="clearHistory">Clear History</button>
+    </div>
+
   <script src="script.js"></script>
 </body>
 </html>

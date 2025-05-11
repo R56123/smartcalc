@@ -12,8 +12,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  align-items: flex-start; /* changed from center */
+  min-height: 100vh; /* changed from height */
+  padding: 40px 20px; /* give breathing space top & sides */}
+
+.main-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 20px;
 }
+
 
 /* Container */
 .calculator-container {
@@ -25,19 +36,27 @@ body {
 
 /* Main Calculator Box */
 .calculator {
+  position: relative;
+  margin-top: 30px;
   background-color: #1e1e1e;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  width: 320px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+  width: 100%;
+  max-width: 320px;
+  transition: box-shadow 0.3s ease;
 }
 
-/* Theme Toggle */
+
 .theme-toggle {
-  text-align: right;
-  margin-bottom: 10px;
-  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
   font-size: 1.2rem;
+  cursor: pointer;
+  margin-bottom: 10px; /* Add this */
+
 }
 
 /* Display */
@@ -54,8 +73,8 @@ body {
 
 /* Button Grid */
 .buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -70,23 +89,29 @@ button {
   cursor: pointer;
   transition: background-color 0.2s;
 }
+.sci-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.basic-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
 
 button:hover {
   background-color: #666;
 }
 
 /* Special Styling for = button */
-button:nth-last-child(1) {
+.basic-buttons button:last-child {
   grid-column: span 2;
   background-color: #3f8efc;
 }
 
-.buttons button:nth-child(-n+12) {
-  background-color: #9e9d9d;
-}
-
-
-button:nth-last-child(1):hover {
+.basic-buttons button:last-child:hover {
   background-color: #1f75e0;
 }
 
@@ -115,19 +140,44 @@ body.light-theme button:hover {
   background-color: #d0d0d0;
 }
 
-body.light-theme button:nth-last-child(1) {
+.equals {
+  grid-column: span 2;
   background-color: #3f8efc;
   color: #fff;
 }
 
-body.light-theme button:nth-last-child(1):hover {
+.equals:hover {
+  background-color: #1f75e0;
+}
+
+body.light-theme .equals {
+  background-color: #3f8efc;
+  color: #fff;
+}
+
+body.light-theme .equals:hover {
   background-color: #1f75e0;
 }
 
 /* Hide Scientific buttons upon reload. */
-.sci {
-  display: none;
+.sci-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.3s ease;
 }
+
+.sci-buttons.visible {
+  max-height: 1000px; /* Enough to show all buttons */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 
 /* Mode toggle button container */
 .mode-toggle {
@@ -168,8 +218,8 @@ body.light-theme #modeSwitch:hover {
   margin-top: 30px;
   padding: 15px 20px;
   border-radius: 12px;
-  width: 320px;
-  max-height: 200px;
+  width: 100%;
+  max-height: 320px;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
@@ -192,3 +242,38 @@ body.light-theme #modeSwitch:hover {
   border-bottom: 1px solid #333;
   font-size: 0.95rem;
 }
+/* Clear History Button */
+#clearHistory {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#clearHistory:hover {
+  background-color: #e04141;
+}
+
+body.light-theme #clearHistory {
+  background-color: #aa0000;
+}
+
+body.light-theme #clearHistory:hover {
+  background-color: #cc0000;
+}
+
+body.light-theme .history-panel {
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .history-panel li {
+  border-color: #ccc;
+}
+
