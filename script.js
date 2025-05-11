@@ -1,4 +1,6 @@
 const display = document.getElementById('display');
+const historyList = document.getElementById('historyList');
+
 let currentInput = '';
 let resetDisplay = false;
 
@@ -33,17 +35,26 @@ function handleButtonClick(value) {
       });
 
       const result = eval(expression);
+        addToHistory(`${currentInput} = ${result}`); // ✅ ADD THIS
       currentInput = result.toString();
     } catch {
       currentInput = 'Error';
     }
-  } else {
+  }
+  
+   else {
     if (currentInput === 'Error') currentInput = '';
     currentInput += value;
   }
-
   updateDisplay(currentInput);
+  
 }
+function addToHistory(entry) {
+  const li = document.createElement('li');
+  li.textContent = entry;
+  historyList.prepend(li); // newest at top
+}
+
 
 // Convert degrees to radians for trig functions
 function toRad(deg) {
