@@ -7,7 +7,6 @@ function updateDisplay(value) {
   display.textContent = value || '0';
 }
 
-// Handle button click
 function handleButtonClick(value) {
   if (value === 'C') {
     currentInput = '';
@@ -15,7 +14,26 @@ function handleButtonClick(value) {
     currentInput = currentInput.slice(0, -1);
   } else if (value === '=') {
     try {
-      currentInput = eval(currentInput).toString();
+      let expression = currentInput
+        .replace(/π/g, Math.PI)
+        .replace(/e/g, Math.E)
+        .replace(/√/g, 'Math.sqrt')
+        .replace(/log/g, 'Math.log10')
+        .replace(/ln/g, 'Math.log')
+        .replace(/sin/g, 'Math.sin(toRad')
+        .replace(/cos/g, 'Math.cos(toRad')
+        .replace(/tan/g, 'Math.tan(toRad')
+        .replace(/x²/g, '**2')
+        .replace(/\^/g, '**');
+
+      // Automatically close toRad() if any trig is used
+      const trigFunctions = ['Math.sin(toRad', 'Math.cos(toRad', 'Math.tan(toRad'];
+      trigFunctions.forEach(fn => {
+        if (expression.includes(fn)) expression += ')';
+      });
+
+      const result = eval(expression);
+      currentInput = result.toString();
     } catch {
       currentInput = 'Error';
     }
@@ -26,6 +44,12 @@ function handleButtonClick(value) {
 
   updateDisplay(currentInput);
 }
+
+// Convert degrees to radians for trig functions
+function toRad(deg) {
+  return (deg * Math.PI) / 180;
+}
+
 
 // Attach event listeners to all buttons
 document.querySelectorAll('.buttons button').forEach(button => {

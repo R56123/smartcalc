@@ -81,6 +81,11 @@ button:nth-last-child(1) {
   background-color: #3f8efc;
 }
 
+.buttons button:nth-child(-n+12) {
+  background-color: #9e9d9d;
+}
+
+
 button:nth-last-child(1):hover {
   background-color: #1f75e0;
 }
