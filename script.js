@@ -85,3 +85,21 @@ themeToggle.addEventListener('click', () => {
   themeToggle.textContent =
     document.body.classList.contains('light-theme') ? '🌞' : '🌙';
 });
+
+// Toggle scientific mode
+const sciButtons = document.querySelectorAll('.sci');
+const modeSwitch = document.getElementById('modeSwitch');
+
+let isScientificMode = false;
+
+modeSwitch.addEventListener('click', () => {
+  isScientificMode = !isScientificMode;
+
+  sciButtons.forEach(btn => {
+    btn.style.display = isScientificMode ? 'inline-block' : 'none';
+  });
+
+  modeSwitch.textContent = isScientificMode
+    ? 'Switch to Basic Mode'
+    : 'Switch to Scientific Mode';
+});
