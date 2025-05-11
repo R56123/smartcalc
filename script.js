@@ -6,6 +6,10 @@ let resetDisplay = false;
 
 // Update display content
 function updateDisplay(value) {
+  display.classList.remove('error');
+  if (value === 'Syntax Error' || value === 'Invalid Input') {
+    display.classList.add('error');
+  }
   display.textContent = value || '0';
 }
 
@@ -15,40 +19,52 @@ function handleButtonClick(value) {
   } else if (value === '←') {
     currentInput = currentInput.slice(0, -1);
   } else if (value === '=') {
-    try {
-      let expression = currentInput
-        .replace(/π/g, Math.PI)
-        .replace(/e/g, Math.E)
-        .replace(/√/g, 'Math.sqrt')
-        .replace(/log/g, 'Math.log10')
-        .replace(/ln/g, 'Math.log')
-        .replace(/sin/g, 'Math.sin(toRad')
-        .replace(/cos/g, 'Math.cos(toRad')
-        .replace(/tan/g, 'Math.tan(toRad')
-        .replace(/x²/g, '**2')
-        .replace(/\^/g, '**');
+  let expression = currentInput
+    .replace(/π/g, Math.PI)
+    .replace(/e/g, Math.E)
+    .replace(/√/g, 'Math.sqrt')
+    .replace(/log/g, 'Math.log10')
+    .replace(/ln/g, 'Math.log')
+    .replace(/sin/g, 'Math.sin(toRad')
+    .replace(/cos/g, 'Math.cos(toRad')
+    .replace(/tan/g, 'Math.tan(toRad')
+    .replace(/x²/g, '**2')
+    .replace(/\^/g, '**');
 
-      // Automatically close toRad() if any trig is used
-      const trigFunctions = ['Math.sin(toRad', 'Math.cos(toRad', 'Math.tan(toRad'];
-      trigFunctions.forEach(fn => {
-        if (expression.includes(fn)) expression += ')';
-      });
+  // Automatically close toRad() if any trig is used
+  const trigFunctions = ['Math.sin(toRad', 'Math.cos(toRad', 'Math.tan(toRad'];
+  trigFunctions.forEach(fn => {
+    if (expression.includes(fn)) expression += ')';
+  });
 
-      const result = eval(expression);
-        addToHistory(`${currentInput} = ${result}`); // ✅ ADD THIS
-      currentInput = result.toString();
-    } catch {
-      currentInput = 'Error';
+  try {
+    const result = eval(expression);
+
+    if (
+      typeof result === 'undefined' ||
+      result === Infinity ||
+      isNaN(result)
+    ) {
+      throw new Error('Invalid Calculation');
+    }
+
+    addToHistory(`${currentInput} = ${result}`);
+    currentInput = result.toString();
+  } catch (error) {
+    if (error.message === 'Invalid Calculation') {
+      currentInput = 'Invalid Input';
+    } else {
+      currentInput = 'Syntax Error';
     }
   }
-  
+}
    else {
     if (currentInput === 'Error') currentInput = '';
     currentInput += value;
   }
   updateDisplay(currentInput);
-
 }
+
 function addToHistory(entry) {
   const li = document.createElement('li');
   li.textContent = entry;

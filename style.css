@@ -109,7 +109,6 @@ button:active {
     0 0 12px rgba(63, 142, 252, 0.9);
 }
 
-
 .basic-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -292,3 +291,6 @@ body.light-theme .history-panel li {
   border-color: #ccc;
 }
 
+.display.error {
+  color: #ff4d4d;
+}
