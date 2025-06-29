@@ -1,0 +1,15 @@
+{
+  "name": "smartcalc",
+  "version": "1.0.0",
+  "description": "SmartCalc is a sleek, responsive, and beginner-friendly web calculator built with HTML, CSS, and JavaScript. It supports standard arithmetic operations with plans for advanced scientific features, keyboard input, and theme switching.",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.0.3"
+  }
+}
